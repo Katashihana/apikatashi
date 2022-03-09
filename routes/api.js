@@ -58,8 +58,9 @@ var { Search,
          getInfo,
          Getdownload} = require('../lib/otakudesu.js');
 var { quotes,
-         twitter,
-         joox} = require('../lib/scrape.js');
+         twitter,} = require('../lib/scrape.js');
+var { joox,
+         jooxdl} = require('../lib/joox.js');
 var { wiki,
          cnn,
          artinama,
@@ -1889,18 +1890,18 @@ router.get('/nulis', async (req, res, next) => {
            var inputPath = __path + '/lib/kertas/nulis.jpg'
            var outputPath = __path + '/tmp/hasil.jpg'
       spawn('convert', [
-            inputPath,
-            '-font',
-            fontPath,
-            '-size',
-            '700x960',
-            '-pointsize',
-            '30',
-            '-interline-spacing',
-            '-7',
-            '-annotate',
-            '+170+222',
-            text,
+      inputPath,
+									'-font',
+									fontPath,
+									'-size',
+									'960x1280',
+									'-pointsize',
+									'23',
+									'-interline-spacing',
+									'2',
+									'-annotate',
+									'+128+129',
+									text,
             outputPath
          ])
          .on('error', () => console.log('Error Nulis'))
