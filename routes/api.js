@@ -30,6 +30,7 @@ const NanaAPI = require('nana-api')
 var ytrend = require('@freetube/yt-trending-scraper');
 var cakone = require('1cak');
 var { Primbon } = require('scrape-primbon')
+var { spawn, exec } = require('child_process');
 var primbon = new Primbon();
 var router  = express.Router();
 
