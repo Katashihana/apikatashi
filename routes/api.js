@@ -1522,6 +1522,24 @@ router.get('/tebakgambar', async(req, res, reject) => {
 
 ///Anime & Nsfw Fitur
 
+router.get('/nekopoi_latest', async(req, res, reject) => {
+	var apikey = req.query.apikey
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	getLatest()
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+             	status: `Success`,
+             	result: result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
 router.get('/nhentai_tag', async (req, res, next) => {
 	var apikey = req.query.apikey
 	
