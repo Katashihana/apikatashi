@@ -2229,10 +2229,6 @@ router.get('/emojimix_download', async(req, res, reject) => {
     await sleep(3000)
     await fs.unlinkSync(__path + '/tmp/mix.png')
 		})
-		.catch(e => {
-			res.sendFile(__path + '/docs/503.html')
-	})
-})
 
 router.get('/pinterest_stalk', async (req, res, next) => {
              var username = req.query.username;
