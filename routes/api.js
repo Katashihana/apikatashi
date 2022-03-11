@@ -56,6 +56,13 @@ var { palingmurah,
          sfilesearch,
          muihalal,
          jalantikus} = require('../lib/testapi.js');
+var { randomTiktok,
+         tiktokHastag} = require('../lib/tiktok_search.js');
+var {
+    getLatest,
+    getVideo
+} = require('../lib/nekopoi.js');
+var { Search, animeDetail, downloadEps } = require('../lib/mynime.js');
 var { photofunSearch, photofunEffect, photofunUse } = require('../lib/photofunia.js');
 var { dafontSearch, dafontDown} = require('../lib/dafont.js');
 var neonime = require('../lib/neonime.js')
@@ -1817,6 +1824,69 @@ router.get('/anoboys_downloader', async(req, res, reject) => {
 	})
 })
 
+router.get('/mynime_downloader', async(req, res, reject) => {
+	var url = req.query.url;
+	var apikey = req.query.apikey
+	
+	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	downloadEps(url)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            creator: `Katashi Hana`,
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/mynime_search', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	Search(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/mynime_detail', async(req, res, reject) => {
+	var url = req.query.url;
+	var apikey = req.query.apikey
+	
+	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	animeDetail(url)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            creator: `Katashi Hana`,
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
 ///Other & News Fitur
 
 router.get('/lirik', async(req, res, reject) => {
@@ -2216,7 +2286,7 @@ router.get('/tiktok_hashtag', async(req, res, reject) => {
 	if (!q) return res.sendFile(__path + '/docs/406.html')
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-	TikTokScraper.hashtag(q, options)
+	tiktokHastag(q)
 	.then(data => {
 		var result = data;
 		res.json({
@@ -2228,33 +2298,11 @@ router.get('/tiktok_hashtag', async(req, res, reject) => {
 	})
 })
 
-router.get('/tiktok_trend', async(req, res, reject) => {
-	var q = req.query.q;
+router.get('/tiktok_random', async(req, res, reject) => {
 	var apikey = req.query.apikey
-	
-	if (!q) return res.sendFile(__path + '/docs/406.html')
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-	TikTokScraper.trend('', options)
-	.then(data => {
-		var result = data;
-		res.json({
-			result
-		})
-		})
-		.catch(e => {
-			res.sendFile(__path + '/docs/503.html')
-	})
-})
-
-router.get('/photofun_search', async(req, res, reject) => {
-	var q = req.query.q;
-	var apikey = req.query.apikey
-	
-	if (!q) return res.sendFile(__path + '/docs/406.html')
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-	photofunSearch(q)
+	randomTiktok()
 	.then(data => {
 		var result = data;
 		res.json({
