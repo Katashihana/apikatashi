@@ -12,7 +12,7 @@ var lolkill = db.get("lolkill");
 var creator = ['Katashi Hana'];
 
 
-keyapi = 'KaTasHiKey'
+keyapi = 'katashi'
 
 var axios = require('axios');
 var qs = require('qs');
@@ -33,6 +33,7 @@ var { Primbon } = require('scrape-primbon')
 var { spawn, exec } = require('child_process');
 var primbon = new Primbon();
 var router  = express.Router();
+var TikTokScraper = require('tiktok-scraper');
 
 var { color, bgcolor } = require(__path + '/lib/color.js');
 var { fetchJson } = require(__path + '/lib/fetcher.js')
@@ -43,16 +44,20 @@ var {
 	Searchnabi,
     Gempa
 } = require('./../lib');
+var { options } = require('../lib/options.js');
 var { zippy } = require('../lib/zippy.js');
 var { mediafireDl } = require('../lib/mediafire.js');
 var { doujindesu } = require('../lib/doujindesu.js');
 var { sfiledl } = require('../lib/solidfiles.js');
+var { jadwalSolat } = require('../lib/solat.js');
 var { palingmurah,
          kompasnews,
          tribunnews,
          sfilesearch,
          muihalal,
          jalantikus} = require('../lib/testapi.js');
+var { photofunSearch, photofunEffect, photofunUse } = require('../lib/photofunia.js');
+var { dafontSearch, dafontDown} = require('../lib/dafont.js');
 var neonime = require('../lib/neonime.js')
 var { Search,
          getInfo,
@@ -1030,6 +1035,27 @@ router.get('/pxy_petterns', async (req, res, next) => {
 
 ///Islam Fitur
 
+router.get('/jadwal_solat'2, async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	jadwalSolat(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+             	status: `Success`,
+             	result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
 router.get('/jadwal_sholat', async(req, res, reject) => {
 	var q = req.query.q;
 	var apikey = req.query.apikey
@@ -1077,6 +1103,25 @@ router.get('/surah', async(req, res, reject) => {
 })
 
 ///Downloader Fitur
+
+router.get('/dafont_download', async(req, res, reject) => {
+	var url = req.query.url;
+	var apikey = req.query.apikey
+	
+	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	dafontDown(url)
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
 
 router.get('/joox', async(req, res, reject) => {
 	var q = req.query.q;
@@ -1418,28 +1463,7 @@ router.get('/tebakchara', async (req, res, next) => {
         .then(response => response.json())
         .then(data => {
         var tebakchara = data;
-        var result = lontong[Math.floor(Math.random() * tebakchara.length)];
-             res.json({
-             	message: `Ok`,
-             	status: `Success`,
-             	result
-             })
-         })
-         .catch(e => {
-         	res.sendFile(__path + '/docs/503.html')
-})
-})
-
-router.get('/tebakchara', async (req, res, next) => {
-	var apikey = req.query.apikey
-	
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-       fetch(encodeURI(`https://raw.githubusercontent.com/Kotzyy/Database/main/tebakchara.json`))
-        .then(response => response.json())
-        .then(data => {
-        var tebakchara = data;
-        var result = lontong[Math.floor(Math.random() * tebakchara.length)];
+        var result = tebakchara[Math.floor(Math.random() * tebakchara.length)];
              res.json({
              	message: `Ok`,
              	status: `Success`,
@@ -1460,7 +1484,7 @@ router.get('/susunkata', async (req, res, next) => {
         .then(response => response.json())
         .then(data => {
         var susunkata = data;
-        var result = lontong[Math.floor(Math.random() * susunkata.length)];
+        var result = susunkata[Math.floor(Math.random() * susunkata.length)];
              res.json({
              	message: `Ok`,
              	status: `Success`,
@@ -1490,6 +1514,107 @@ router.get('/tebakgambar', async(req, res, reject) => {
 })
 
 ///Anime & Nsfw Fitur
+
+router.get('/nhentai_tag', async (req, res, next) => {
+	var apikey = req.query.apikey
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       fetch(encodeURI(`https://yui-api.herokuapp.com/api/nhtag?tag=yuri&page=1`))
+        .then(response => response.json())
+        .then(data => {
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	result: data
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
+router.get('/nhentai_home', async (req, res, next) => {
+	var apikey = req.query.apikey
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       fetch(encodeURI(`https://yui-api.herokuapp.com/api/nhhome?page=1`))
+        .then(response => response.json())
+        .then(data => {
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	result: data
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
+router.get('/nhentai_search', async (req, res, next) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       fetch(encodeURI(`https://yui-api.herokuapp.com/api/nhsearch?query=${q}&page=1`))
+        .then(response => response.json())
+        .then(data => {
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	result: data
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
+router.get('/nhentai_detail', async (req, res, next) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       fetch(encodeURI(`https://yui-api.herokuapp.com/api/nhdetail?code=${q}`))
+        .then(response => response.json())
+        .then(data => {
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	result: data
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
+router.get('/nhentai_artist', async (req, res, next) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       fetch(encodeURI(`https://yui-api.herokuapp.com/api/nhartist?artist=${q}&page=1`))
+        .then(response => response.json())
+        .then(data => {
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	result: data
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
 
 router.get('/neonime_ongoing', async(req, res, reject) => {
 	var apikey = req.query.apikey;
@@ -2014,6 +2139,92 @@ router.get('/covid', async(req, res, reject) => {
 })
 
 /// Media & Search Fitur
+
+router.get('/tiktok_hashtag', async (req, res, next) => {
+	var q = req.query.q;
+    var apikeyInput = req.query.apikey
+
+    if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+
+     TikTokScraper.hashtag(q, options)
+         .then(hash => {
+             console.log(vid)
+             res.json({
+                 status: true,
+                 creator: `${creator}`,
+                 videoNoWm: hash
+             })
+         })
+         .catch(e => {
+             res.json(loghandler.invalidLink)
+         })
+})
+
+router.get('/photofun_search', async (req, res, next) => {
+	var q = req.query.q;
+    var apikeyInput = req.query.apikey
+
+    if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+
+     photofunSearch(q)
+         .then(poto => {
+             console.log(vid)
+             res.json({
+                 status: true,
+                 creator: `${creator}`,
+                 videoNoWm: poto
+             })
+         })
+         .catch(e => {
+             res.json(loghandler.invalidLink)
+         })
+})
+
+router.get('/dafont_search', async (req, res, next) => {
+	var q = req.query.q;
+    var apikeyInput = req.query.apikey
+
+    if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+
+     dafontSearch(q)
+         .then(poto => {
+             console.log(vid)
+             res.json({
+                 status: true,
+                 creator: `${creator}`,
+                 videoNoWm: poto
+             })
+         })
+         .catch(e => {
+             res.json(loghandler.invalidLink)
+         })
+})
+
+router.get('/tiktok_trend', async (req, res, next) => {
+    var apikeyInput = req.query.apikey
+
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+
+     TikTokScraper.trend('', options)
+         .then(trend => {
+             console.log(vid)
+             res.json({
+                 status: true,
+                 creator: `${creator}`,
+                 videoNoWm: trend
+             })
+         })
+         .catch(e => {
+             res.json(loghandler.invalidLink)
+         })
+})
 
 router.get('/pinterest_stalk', async (req, res, next) => {
              var username = req.query.username;
