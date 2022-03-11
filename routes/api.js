@@ -2189,6 +2189,29 @@ router.get('/covid', async(req, res, reject) => {
 
 /// Media & Search Fitur
 
+router.get('/emojimix', async (req, res, next) => {
+	var emoji1 = req.query.namalaki;
+	var emoji2 = req.query.namaperem;
+	var apikey = req.query.apikey
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       fetch(encodeURI(`https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${emoji1}_${emoji2}`))
+        .then(response => response.json())
+        .then(data => {
+        var lontong = data;
+        var result = lontong[Math.floor(Math.random() * lontong.length)];
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	result
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
 router.get('/pinterest_stalk', async (req, res, next) => {
              var username = req.query.username;
              var apikey = req.query.apikey
@@ -2532,9 +2555,8 @@ router.get('/kecocokan_nama_pasangan', async(req, res, reject) => {
 	var namaperem = req.query.namaperem;
 	var apikey = req.query.apikey
 	
-	if (!tgl) return res.sendFile(__path + '/docs/406.html')
-	if (!bln) return res.sendFile(__path + '/docs/406.html')
-	if (!thn) return res.sendFile(__path + '/docs/406.html')
+	if (!namalaki) return res.sendFile(__path + '/docs/406.html')
+	if (!namaperem) return res.sendFile(__path + '/docs/406.html')
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
 	primbon.kecocokan_nama_pasangan(namalaki, namaperem)
