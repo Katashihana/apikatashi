@@ -2208,7 +2208,6 @@ router.get('/emojimix', async (req, res, next) => {
              	message: `Ok`,
              	status: `Success`,
              	result: emojimix.results
-                 url: emojimix.results.url
              })
          })
          .catch(e => {
