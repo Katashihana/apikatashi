@@ -2063,6 +2063,8 @@ router.get('/nulis', async (req, res, next) => {
 	   var fontPath = __path + '/lib/font/Zahraaa.ttf'
            var inputPath = __path + '/lib/kertas/nulis.jpg'
            var outputPath = __path + '/tmp/hasil.jpg'
+           const splitText = text.replace(/(\S+\s*){1,9}/g, '$&\n')
+			const fixHeight = splitText.split('\n').slice(0, 31).join('\n')
       spawn('convert', [
       inputPath,
 									'-font',
@@ -2075,7 +2077,7 @@ router.get('/nulis', async (req, res, next) => {
 									'2',
 									'-annotate',
 									'+128+129',
-									text,
+									fixHeight,
             outputPath
          ])
          .on('error', () => console.log('Error Nulis'))
@@ -2190,26 +2192,47 @@ router.get('/covid', async(req, res, reject) => {
 /// Media & Search Fitur
 
 router.get('/emojimix', async (req, res, next) => {
-	var emoji1 = req.query.namalaki;
-	var emoji2 = req.query.namaperem;
+	var emoji1 = req.query.emoji1;
+	var emoji2 = req.query.emoji2;
 	var apikey = req.query.apikey
 	
+	if (!emoji1) return res.sendFile(__path + '/docs/406.html')
+	if (!emoji2) return res.sendFile(__path + '/docs/406.html')
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
        fetch(encodeURI(`https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${emoji1}_${emoji2}`))
         .then(response => response.json())
         .then(data => {
-        var lontong = data;
-        var result = lontong[Math.floor(Math.random() * lontong.length)];
+        var emojimix = data;
              res.json({
              	message: `Ok`,
              	status: `Success`,
-             	result
+             	result: emojimix.results
+                 url: emojimix.results.url
              })
          })
          .catch(e => {
          	res.sendFile(__path + '/docs/503.html')
 })
+})
+
+router.get('/emojimix_download', async(req, res, reject) => {
+	var url = req.query.url;
+	var apikey = req.query.apikey
+	
+	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	var result = (await axios.get(`${url}`)).data
+	data = await getBuffer(result)
+	await fs.writeFileSync(__path +'/tmp/mix.png', data)
+    await res.sendFile(__path +'/tmp/mix.png')
+    await sleep(3000)
+    await fs.unlinkSync(__path + '/tmp/mix.png')
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
 })
 
 router.get('/pinterest_stalk', async (req, res, next) => {
