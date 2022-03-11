@@ -1875,26 +1875,6 @@ router.get('/kodepos', async(req, res, reject) => {
 			res.sendFile(__path + '/docs/503.html')
 	})
 })
-         
-
-router.get('/asupanfilm', async(req, res, reject) => {
-	var q = req.query.q;
-	var apikey = req.query.apikey
-	
-	if (!q) return res.sendFile(__path + '/docs/406.html')
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-	asupanfilm(q)
-	.then(data => {
-		var result = data;
-		res.json({
-			result
-		})
-		})
-		.catch(e => {
-			res.sendFile(__path + '/docs/503.html')
-	})
-})
 
 router.get('/film_lk21', async(req, res, reject) => {
 	var q = req.query.q;
@@ -1904,25 +1884,6 @@ router.get('/film_lk21', async(req, res, reject) => {
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
 	film(q)
-	.then(data => {
-		var result = data;
-		res.json({
-			result
-		})
-		})
-		.catch(e => {
-			res.sendFile(__path + '/docs/503.html')
-	})
-})
-
-router.get('/asupanfilm_info', async(req, res, reject) => {
-	var url = req.query.url;
-	var apikey = req.query.apikey
-	
-	if (!url) return res.sendFile(__path + '/docs/406.html')
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-	asupanfilminfo(url)
 	.then(data => {
 		var result = data;
 		res.json({
@@ -2140,92 +2101,6 @@ router.get('/covid', async(req, res, reject) => {
 
 /// Media & Search Fitur
 
-router.get('/tiktok_hashtag', async (req, res, next) => {
-	var q = req.query.q;
-    var apikeyInput = req.query.apikey
-
-    if (!q) return res.sendFile(__path + '/docs/406.html')
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-
-     TikTokScraper.hashtag(q, options)
-         .then(hash => {
-             console.log(vid)
-             res.json({
-                 status: true,
-                 creator: `${creator}`,
-                 videoNoWm: hash
-             })
-         })
-         .catch(e => {
-             res.json(loghandler.invalidLink)
-         })
-})
-
-router.get('/photofun_search', async (req, res, next) => {
-	var q = req.query.q;
-    var apikeyInput = req.query.apikey
-
-    if (!q) return res.sendFile(__path + '/docs/406.html')
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-
-     photofunSearch(q)
-         .then(poto => {
-             console.log(vid)
-             res.json({
-                 status: true,
-                 creator: `${creator}`,
-                 videoNoWm: poto
-             })
-         })
-         .catch(e => {
-             res.json(loghandler.invalidLink)
-         })
-})
-
-router.get('/dafont_search', async (req, res, next) => {
-	var q = req.query.q;
-    var apikeyInput = req.query.apikey
-
-    if (!q) return res.sendFile(__path + '/docs/406.html')
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-
-     dafontSearch(q)
-         .then(poto => {
-             console.log(vid)
-             res.json({
-                 status: true,
-                 creator: `${creator}`,
-                 videoNoWm: poto
-             })
-         })
-         .catch(e => {
-             res.json(loghandler.invalidLink)
-         })
-})
-
-router.get('/tiktok_trend', async (req, res, next) => {
-    var apikeyInput = req.query.apikey
-
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-
-     TikTokScraper.trend('', options)
-         .then(trend => {
-             console.log(vid)
-             res.json({
-                 status: true,
-                 creator: `${creator}`,
-                 videoNoWm: trend
-             })
-         })
-         .catch(e => {
-             res.json(loghandler.invalidLink)
-         })
-})
-
 router.get('/pinterest_stalk', async (req, res, next) => {
              var username = req.query.username;
              var apikey = req.query.apikey
@@ -2296,25 +2171,6 @@ router.get('/google_search', async(req, res, reject) => {
 	})
 })
 
-router.get('/palingmurah', async(req, res, reject) => {
-	var q = req.query.q;
-	var apikey = req.query.apikey
-	
-	if (!q) return res.sendFile(__path + '/docs/406.html')
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-	palingmurah(q)
-	.then(data => {
-		var result = data;
-		res.json({
-			result
-		})
-		})
-		.catch(e => {
-			res.sendFile(__path + '/docs/503.html')
-	})
-})
-
 router.get('/sfilesearch', async(req, res, reject) => {
 	var q = req.query.q;
 	var apikey = req.query.apikey
@@ -2342,6 +2198,82 @@ router.get('/drakor', async(req, res, reject) => {
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
 	drakor(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/tiktok_hashtag', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	TikTokScraper.hashtag(q, options)
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/tiktok_trend', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	TikTokScraper.trend('', options)
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/photofun_search', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	photofunSearch(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/dafont_search', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	dafontSearch(q)
 	.then(data => {
 		var result = data;
 		res.json({
