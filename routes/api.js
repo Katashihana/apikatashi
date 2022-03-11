@@ -1035,7 +1035,7 @@ router.get('/pxy_petterns', async (req, res, next) => {
 
 ///Islam Fitur
 
-router.get('/jadwal_solat'2, async(req, res, reject) => {
+router.get('/jadwal_solat2', async(req, res, reject) => {
 	var q = req.query.q;
 	var apikey = req.query.apikey
 	
