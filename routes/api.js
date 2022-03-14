@@ -1063,6 +1063,28 @@ router.get('/jadwal_solat2', async(req, res, reject) => {
 	})
 })
 
+router.get('/alquran_audio', async (req, res, next) => {
+	var surah = req.query.surah;
+	var ayat = req.query.ayat;
+	var apikey = req.query.apikey
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       fetch(encodeURI(`https://api.quran.sutanlab.id/surah/${surah}/${ayat}`))
+        .then(response => response.json())
+        .then(data => {
+        var alquran = data;
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	data: alquran.data
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
 router.get('/jadwal_sholat', async(req, res, reject) => {
 	var q = req.query.q;
 	var apikey = req.query.apikey
@@ -1471,6 +1493,27 @@ router.get('/tebakchara', async (req, res, next) => {
         .then(data => {
         var tebakchara = data;
         var result = tebakchara[Math.floor(Math.random() * tebakchara.length)];
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	result
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
+router.get('/tebakkata', async (req, res, next) => {
+	var apikey = req.query.apikey
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       fetch(encodeURI(`https://raw.githubusercontent.com/Kotzyy/Database/main/tebakkata.json`))
+        .then(response => response.json())
+        .then(data => {
+        var susunkata = data;
+        var result = susunkata[Math.floor(Math.random() * susunkata.length)];
              res.json({
              	message: `Ok`,
              	status: `Success`,
