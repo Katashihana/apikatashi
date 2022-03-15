@@ -1133,6 +1133,50 @@ router.get('/surah', async(req, res, reject) => {
 
 ///Downloader Fitur
 
+router.get('/play_mp3', async (req, res, next) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       fetch(encodeURI(`https://api.akuari.my.id/downloader/play2?query=${q}`))
+        .then(response => response.json())
+        .then(data => {
+        var play3 = data;
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	result: play3.mp3
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
+router.get('/play_mp4', async (req, res, next) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       fetch(encodeURI(`https://api.akuari.my.id/downloader/play2?query=${q}`))
+        .then(response => response.json())
+        .then(data => {
+        var play3 = data;
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	result: play3.mp4
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
 router.get('/dafont_download', async(req, res, reject) => {
 	var url = req.query.url;
 	var apikey = req.query.apikey
