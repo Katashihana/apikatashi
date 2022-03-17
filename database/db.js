@@ -3,9 +3,9 @@ var __path = process.cwd(),
      { color } = require(__path + '/lib/color.js')
 
 // Connection URL
-var url = 'https://api-katashi.herokuapp.com';
+var url = 'mongodb+srv://Katashi:iyung123@cluster0.zeixi.mongodb.net/test';
 try {
-if(url == 'https://api-katashi.herokuapp.com') throw console.log(color('Configurasi database, var url belum diisi','red'));
+if(url == 'mongodb+srv://Katashi:iyung123@cluster0.zeixi.mongodb.net/test') throw console.log(color('Configurasi database, var url belum diisi','red'));
 } catch (e) {
 	return;
 	}
