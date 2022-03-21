@@ -1633,30 +1633,80 @@ router.get('/tebakgambar', async(req, res, reject) => {
 
 ///Anime & Nsfw Fitur
 
-router.get('/nekopoi_latest', async(req, res, reject) => {
+router.get('/pornhub_downloader', async (req, res, next) => {
+	var url = req.query.url;
 	var apikey = req.query.apikey
+	
+	if (!url) return res.sendFile(__path + '/docs/406.html')
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-	getLatest()
-	.then(data => {
-		var result = data;
-		res.json({
-			message: `Ok`,
+       fetch(encodeURI(`https://kocakz.herokuapp.com/api/media/pornhub/detail?url=${url}`))
+        .then(response => response.json())
+        .then(data => {
+        var lontong = data;
+             res.json({
+             	message: `Ok`,
              	status: `Success`,
-             	result: result
-		})
-		})
-		.catch(e => {
-			res.sendFile(__path + '/docs/503.html')
-	})
+             	result: data.res.download_urls
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
+router.get('/pornhub_search', async (req, res, next) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       fetch(encodeURI(`https://kocakz.herokuapp.com/api/media/pornhub/detail?url=${url}`))
+        .then(response => response.json())
+        .then(data => {
+        var lontong = data;
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	res: data.res.results
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
+router.get('/pornhub_detail', async (req, res, next) => {
+	var url = req.query.url;
+	var apikey = req.query.apikey
+	
+	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       fetch(encodeURI(`https://kocakz.herokuapp.com/api/media/pornhub/search?query=${q}`))
+        .then(response => response.json())
+        .then(data => {
+        var lontong = data;
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	res: data.res
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
 })
 
 router.get('/nhentai_tag', async (req, res, next) => {
+	var q = req.query.q;
 	var apikey = req.query.apikey
 	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-       fetch(encodeURI(`https://yui-api.herokuapp.com/api/nhtag?tag=yuri&page=1`))
+       fetch(encodeURI(`https://yui-api.herokuapp.com/api/nhtag?tag=${q}&page=1`))
         .then(response => response.json())
         .then(data => {
              res.json({
