@@ -1,5 +1,5 @@
 {
-  "name": "arnz-api",
+  "name": "Katashi-api",
   "version": "1.0.0",
   "description": "res api website",
   "main": "index.js",
@@ -50,6 +50,7 @@
     "tiktok-scraper": "^1.4.12",
     "urlencode": "^1.1.0",
     "url": "^0.11.0",
+    "usetube": "^2.1.4",
     "ytdl-core": "^4.4.5",
     "ytpl": "^2.0.5"
   }
