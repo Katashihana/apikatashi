@@ -35,6 +35,7 @@ var primbon = new Primbon();
 var router  = express.Router();
 var TikTokScraper = require('tiktok-scraper');
 const malScraper = require('mal-scraper') 
+const usetube = require('usetube');
 
 var { color, bgcolor } = require(__path + '/lib/color.js');
 var { fetchJson } = require(__path + '/lib/fetcher.js')
@@ -1669,7 +1670,7 @@ router.get('/pornhub_search', async (req, res, next) => {
              res.json({
              	message: `Ok`,
              	status: `Success`,
-             	res: data.res.results
+             	res: data.res
              })
          })
          .catch(e => {
@@ -2451,7 +2452,7 @@ router.get('/nulis', async (req, res, next) => {
    }
 })
 
-router.get('/nulis-2', async (req, res, next) => {
+router.get('/nulis_2', async (req, res, next) => {
 	var text = req.query.text;
 	var apikey = req.query.apikey
             
@@ -2460,48 +2461,161 @@ router.get('/nulis-2', async (req, res, next) => {
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
 
    try {
-	   var d = new Date
-           var tgl = d.toLocaleDateString('id-Id')
-           var hari = d.toLocaleDateString('id-Id', { weekday: 'long' })
-	   var fontPath = __path + '/lib/font/Zahraaa.ttf'
-           var inputPath = __path + '/lib/kertas/nulis2.jpg'
-           var outputPath = __path + '/tmp/hasil2.jpg'
+   	var fontPath = __path + '/lib/font/Zahraaa.ttf'
+       var inputPath = __path + '/lib/kertas/magernulis1.jpg'
+        var outputPath = __path + '/tmp/hasil2.jpg'
+	   const panjangKalimat4 = text.replace(/(\S+\s*){1,10}/g, '$&\n')
+            const panjangBaris4 = panjangKalimat4.split('\n').slice(0, 33).join('\n')
+            var months = ['- 1 -', '- 2 -', '- 3 -', '- 4 -', '- 5 -', '- 6 -', '- 7 -', '- 8 -', '- 9 -', '- 10 -', '- 11 -', '- 12 -'];
+            var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            var date = new Date();
+            var day = date.getDate();
+            var month = date.getMonth();
+            var thisDay = date.getDay(),
+                thisDay = myDays[thisDay];
+            var yy = date.getYear();
+            var year = (yy < 1000) ? yy + 1900 : yy;
+            const waktu = (day + ' ' + months[month] + ' ' + year)
+            const hari = (thisDay)
       spawn('convert', [
-    inputPath,
-    '-font',
-    fontPath,
-    '-size',
-    '1024x784',
-    '-pointsize',
-    '20',
-    '-interline-spacing',
-    '1',
-    '-annotate',
-    '+806+78',
-    hari,
-    '-font',
-    fontPath,
-    '-size',
-    '1024x784',
-    '-pointsize',
-    '18',
-    '-interline-spacing',
-    '1',
-    '-annotate',
-    '+806+102',
-    tgl,
-    '-font',
-    fontPath,
-    '-size',
-    '1024x784',
-    '-pointsize',
-    '20',
-    '-interline-spacing',
-    '-7.5',
-    '-annotate',
-    '+344+142',
-    text,
-    outputPath
+                inputPath,
+                '-font',
+                fontPath,
+                '-size',
+                '1024x784',
+                '-pointsize',
+                '20',
+                '-interline-spacing',
+                '1',
+                '-annotate',
+                '+806+78',
+                hari,
+                '-font',
+                './font/Zahraaa.ttf',
+                '-size',
+                '1024x784',
+                '-pointsize',
+                '18',
+                '-interline-spacing',
+                '1',
+                '-annotate',
+                '+806+102',
+                waktu,
+                '-font',
+                './font/Zahraaa.ttf',
+                '-size',
+                '1024x784',
+                '-pointsize',
+                '20',
+                '-interline-spacing',
+                '-7.5',
+                '-annotate',
+                '+344+142',
+                panjangBaris4,
+                outputPath
+  ])
+  .on('error', () => console.log('Error Nulis2'))
+  .on('exit', () => {
+
+	          res.sendFile(outputPath)
+        })
+   } catch (e) {
+      console.log(e);
+	 res.json(loghandler.erorr)
+           }
+})
+
+router.get('/nulis_3', async (req, res, next) => {
+	var nama = req.query.nama;
+	var kelas = req.query.kelas;
+	var text = req.query.text;
+	var apikey = req.query.apikey
+            
+    if (!nama) return res.sendFile(__path + '/docs/406.html')
+    if (!kelas) return res.sendFile(__path + '/docs/406.html')
+    if (!text) return res.sendFile(__path + '/docs/406.html')
+    if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+
+   try {
+   	var fontPath = __path + '/lib/font/Zahraaa.ttf'
+       var inputPath = __path + '/lib/kertas/magernulis1.jpg'
+        var outputPath = __path + '/tmp/hasil3.jpg'
+	    const panjangKalimat7 = text.replace(/(\S+\s*){1,10}/g, '$&\n')
+                const panjangNama = nama.replace(/(\S+\s*){1,10}/g, '$&\n')
+                const panjangKelas = kelas.replace(/(\S+\s*){1,10}/g, '$&\n')
+                const panjangBaris7 = panjangKalimat7.split('\n').slice(0, 30).join('\n')
+                const panjangBarisNama = panjangNama.split('\n').slice(0, 30).join('\n')
+                const panjangBarisKelas = panjangKelas.split('\n').slice(0, 30).join('\n')
+                var months = ['- 1 -', '- 2 -', '- 3 -', '- 4 -', '- 5 -', '- 6 -', '- 7 -', '- 8 -', '- 9 -', '- 10 -', '- 11 -', '- 12 -'];
+                var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var date = new Date();
+                var day = date.getDate();
+                var month = date.getMonth();
+                var thisDay = date.getDay(),
+                    thisDay = myDays[thisDay];
+                var yy = date.getYear();
+                var year = (yy < 1000) ? yy + 1900 : yy;
+                const waktu4 = (day + ' ' + months[month] + ' ' + year)
+                const hari4 = (thisDay)
+      spawn('convert', [
+                    inputPath,
+                    '-font',
+                    fontPath,
+                    '-size',
+                    '1024x784',
+                    '-pointsize',
+                    '20',
+                    '-interline-spacing',
+                    '1',
+                    '-annotate',
+                    '+806+78',
+                    hari4,
+                    '-font',
+                    './font/Zahraaa.ttf',
+                    '-size',
+                    '1024x784',
+                    '-pointsize',
+                    '18',
+                    '-interline-spacing',
+                    '1',
+                    '-annotate',
+                    '+806+102',
+                    waktu4,
+                    '-font',
+                    './font/Zahraaa.ttf',
+                    '-size',
+                    '1024x784',
+                    '-pointsize',
+                    '18',
+                    '-interline-spacing',
+                    '1',
+                    '-annotate',
+                    '+360+100',
+                    panjangBarisNama,
+                    '-font',
+                    './font/Zahraaa.ttf',
+                    '-size',
+                    '1024x784',
+                    '-pointsize',
+                    '18',
+                    '-interline-spacing',
+                    '1',
+                    '-annotate',
+                    '+360+120',
+                    panjangBarisKelas, 
+                    '-font',
+                    './font/Zahraaa.ttf',
+                    '-size',
+                    '1024x784',
+                    '-pointsize',
+                    '20',
+                    '-interline-spacing',
+                    '-7.5',
+                    '-annotate',
+                    '+344+142',
+                    panjangBaris7,
+                    outputPath
   ])
   .on('error', () => console.log('Error Nulis2'))
   .on('exit', () => {
@@ -2514,7 +2628,6 @@ router.get('/nulis-2', async (req, res, next) => {
            }
 })
          
-
 router.get('/tribunnews', async(req, res, reject) => {
 	var apikey = req.query.apikey
 	
@@ -2550,6 +2663,48 @@ router.get('/covid', async(req, res, reject) => {
 })
 
 /// Media & Search Fitur
+
+router.get('/yt_search', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	usetube.searchChannel(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/yt_stalk', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	usetube.searchChannel(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
 
 router.get('/emojimix', async (req, res, next) => {
 	var emoji1 = req.query.emoji1;
