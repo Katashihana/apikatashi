@@ -1662,7 +1662,7 @@ router.get('/pornhub_search', async (req, res, next) => {
 	if (!q) return res.sendFile(__path + '/docs/406.html')
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-       fetch(encodeURI(`https://kocakz.herokuapp.com/api/media/pornhub/detail?url=${url}`))
+       fetch(encodeURI(`https://kocakz.herokuapp.com/api/media/pornhub/detail?url=${q}`))
         .then(response => response.json())
         .then(data => {
         var lontong = data;
@@ -1684,7 +1684,7 @@ router.get('/pornhub_detail', async (req, res, next) => {
 	if (!url) return res.sendFile(__path + '/docs/406.html')
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-       fetch(encodeURI(`https://kocakz.herokuapp.com/api/media/pornhub/search?query=${q}`))
+       fetch(encodeURI(`https://kocakz.herokuapp.com/api/media/pornhub/search?query=${url}`))
         .then(response => response.json())
         .then(data => {
         var lontong = data;
