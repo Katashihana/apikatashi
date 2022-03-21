@@ -2463,7 +2463,7 @@ router.get('/nulis_2', async (req, res, next) => {
    try {
    	var fontPath = __path + '/lib/font/Zahraaa.ttf'
        var inputPath = __path + '/lib/kertas/magernulis1.jpg'
-        var outputPath = __path + '/tmp/hasil2.jpg'
+        var outputPath = __path + '/tmp/hasil21.jpg'
 	   const panjangKalimat4 = text.replace(/(\S+\s*){1,10}/g, '$&\n')
             const panjangBaris4 = panjangKalimat4.split('\n').slice(0, 33).join('\n')
             var months = ['- 1 -', '- 2 -', '- 3 -', '- 4 -', '- 5 -', '- 6 -', '- 7 -', '- 8 -', '- 9 -', '- 10 -', '- 11 -', '- 12 -'];
