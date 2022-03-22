@@ -2939,6 +2939,8 @@ router.get('/kill_slime', async (req, res, next) => {
                                 ketiga: `Berhasil Melawan 5`,
                                 keempat: `Selesai quest slime! 💸`,
                                 last: `Mission Slime Completed ✅*\n\n*Kamu Mendapatkan :*\nEmas :${emas} 🪙\nUang : ${pp} 💸\nBesi : ${besi} ⛓️\nBerlian : ${dm} 💎`
+                                }
+                              ]
              })
          .catch(e => {
          	res.sendFile(__path + '/docs/503.html')
@@ -2964,6 +2966,8 @@ router.get('/kill_goblin', async (req, res, next) => {
                                 ketiga: `Berhasil Melawan 5`,
                                 keempat: `Selesai quest goblin! 💸`,
                                 last: `Mission Goblin Completed ✅*\n\n*Kamu Mendapatkan :*\nEmas :${emas} 🪙\nUang : ${pp} 💸\nBesi : ${besi} ⛓️\nBerlian : ${dm} 💎`
+                                }
+                              ]
              })
          .catch(e => {
          	res.sendFile(__path + '/docs/503.html')
@@ -2991,6 +2995,8 @@ router.get('/kill_devil', async (req, res, next) => {
                                 kelima: `Aku Di Bantu Oleh Team!`,
                                 keenam: `Selesai quest devil! 💸`,
                                 last: `Mission Devil Completed ✅*\n\n*Kamu Mendapatkan :*\nEmas :${emas} 🪙\nUang : ${pp} 💸\nBesi : ${besi} ⛓️\nBerlian : ${dm} 💎`
+                                }
+                              ]
              })
          .catch(e => {
          	res.sendFile(__path + '/docs/503.html')
