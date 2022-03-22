@@ -2942,9 +2942,6 @@ router.get('/kill_slime', async (req, res, next) => {
                                 }
                               ]
              })
-         .catch(e => {
-         	res.sendFile(__path + '/docs/503.html')
-})
 })
 
 router.get('/kill_goblin', async (req, res, next) => {
@@ -2969,9 +2966,6 @@ router.get('/kill_goblin', async (req, res, next) => {
                                 }
                               ]
              })
-         .catch(e => {
-         	res.sendFile(__path + '/docs/503.html')
-})
 })
 
 router.get('/kill_devil', async (req, res, next) => {
@@ -2998,9 +2992,6 @@ router.get('/kill_devil', async (req, res, next) => {
                                 }
                               ]
              })
-         .catch(e => {
-         	res.sendFile(__path + '/docs/503.html')
-})
 })
 
 router.get('/simsimi', async (req, res, next) => {
