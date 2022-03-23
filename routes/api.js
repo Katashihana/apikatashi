@@ -36,6 +36,7 @@ var router  = express.Router();
 var TikTokScraper = require('tiktok-scraper');
 const malScraper = require('mal-scraper') 
 const usetube = require('usetube');
+const feedid = require('feedid');
 
 var { color, bgcolor } = require(__path + '/lib/color.js');
 var { fetchJson } = require(__path + '/lib/fetcher.js')
@@ -80,6 +81,7 @@ var { wiki,
          artinama,
          kodepos,
          wallpapper,
+         ghstalk,
          ramalanJodoh} = require('../lib/scrape21.js');
 var { hentaivid,
          asupanfilm,
@@ -94,6 +96,13 @@ var { hentaivid,
          searchgore,
          randomgore,
          drakor,
+         mediafire,
+         ghfollower,
+         igstalk,
+         ghfollower,
+         zerochan,
+         trendtwit,
+         randomtt,
          devianart} = require('../lib/scrapper.js');
 var savefrom = require("../lib/savefrom.js")
 var toonme = require("../lib/toonme.js")
@@ -1528,7 +1537,7 @@ router.get('/mediafire', async(req, res, reject) => {
 	if (!url) return res.sendFile(__path + '/docs/406.html')
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-	mediafireDl(url)
+	mediafire(url)
 	.then(data => {
 		var result = data;
 		res.json({
@@ -2675,6 +2684,132 @@ router.get('/covid', async(req, res, reject) => {
 
 /// Media & Search Fitur
 
+router.get('/onecak', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	cakone.Search(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/igstalk', async(req, res, reject) => {
+	var username = req.query.username;
+             var apikey = req.query.apikey
+   
+	if (!username) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	igstalk(username)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/ghfollower', async(req, res, reject) => {
+	var username = req.query.username;
+             var apikey = req.query.apikey
+   
+	if (!username) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	ghfollower(username)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/zerochan', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	zerochan(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/trendtwit', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	trendtwit(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/randomtt', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	randomtt(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+       
 router.get('/yt_search', async(req, res, reject) => {
 	var q = req.query.q;
 	var apikey = req.query.apikey
