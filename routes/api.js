@@ -1201,6 +1201,48 @@ router.get('/play_mp4', async (req, res, next) => {
 })
 })
 
+router.get('/facebook_downloader', async (req, res, next) => {
+	var url = req.query.url;
+	var apikey = req.query.apikey
+	
+	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       fetch(encodeURI(`https://sekha.tech/api/downloader/facebook?url=${url}&apikey=apirey`))
+        .then(response => response.json())
+        .then(data => {
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	result
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
+router.get('/facebook_downloader2', async (req, res, next) => {
+	var url = req.query.url;
+	var apikey = req.query.apikey
+	
+	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       fetch(encodeURI(`https://sekha.tech/api/downloader/facebook2?url=${url}&apikey=apirey`))
+        .then(response => response.json())
+        .then(data => {
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	result
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
 router.get('/dafont_download', async(req, res, reject) => {
 	var url = req.query.url;
 	var apikey = req.query.apikey
@@ -1565,6 +1607,28 @@ router.get('/caklontong', async (req, res, next) => {
              	message: `Ok`,
              	status: `Success`,
              	result
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
+router.get('/tebak_lagu', async (req, res, next) => {
+	var apikey = req.query.apikey
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       axios.get('https://api.wibusoft.com/api/permainan/tebak-lagu', {
+	responseType: 'json',
+	headers: {
+		'accept': 'application/json'
+	}
+}).then((res) => {
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	rest: res.data.result
              })
          })
          .catch(e => {
@@ -2228,6 +2292,96 @@ router.get('/anime_search_news', async(req, res, reject) => {
 
 ///Other & News Fitur
 
+router.get('/jadwal_bioskop', async(req, res, next) => {
+var apikey = req.query.apikey
+
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+const { default: Axios } = require('axios')
+const cheerio = require('cheerio')
+
+Axios.get('https://jadwalnonton.com/now-playing')
+.then(({ data }) => {
+     const $ = cheerio.load(data)
+     let title = []
+     let url = []
+     let img = []
+ 	$('div.row > div.item > div.clearfix > div.rowl > div.col-xs-6 > a').get().map((rest) => {
+         url.push($(rest).attr('href'))
+         })
+         $('div.row > div.item > div.clearfix > div.rowl > div.col-xs-6 > a > img').get().map((rest) => {
+        	title.push($(rest).attr('alt'))
+         })
+         $('div.row > div.item > div.clearfix > div.rowl > div.col-xs-6 > a > img').get().map((rest) => {
+        	img.push($(rest).attr('src'))
+         })
+     let result = []
+     for (let i = 0; i < url.length; i++) {
+          result.push({
+               	url: url[i],
+               	title: title[i],
+               	img: img[i]
+          })
+     }
+     res.json({
+     creator:  `${creator}`,
+     status: true,
+     result: result
+     })
+})
+.catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+} 
+
+router.get('/attp', async (req, res, next) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       axios.get('https://api.wibusoft.com/api/textmaker/attp?text=${q}, {
+	responseType: 'arraybuffer',
+	headers: {
+		'accept': 'application/json'
+	}
+}).then((res) => {
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	rest: res.data
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
+router.get('/ttp', async (req, res, next) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       axios.get('https://api.wibusoft.com/api/textmaker/ttp?text=${q}, {
+	responseType: 'arraybuffer',
+	headers: {
+		'accept': 'application/json'
+	}
+}).then((res) => {
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	rest: res.data
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
 router.get('/image_to_anime', async(req, res, reject) => {
 	var url = req.query.url;
 	var apikey = req.query.apikey
@@ -2502,7 +2656,7 @@ router.get('/nulis_2', async (req, res, next) => {
                 '-font',
                 fontPath,
                 '-size',
-                '1024x784',
+                '980x1280',
                 '-pointsize',
                 '20',
                 '-interline-spacing',
@@ -2583,7 +2737,7 @@ router.get('/nulis_3', async (req, res, next) => {
                     '-font',
                     fontPath,
                     '-size',
-                    '1024x784',
+                    '980x1280',
                     '-pointsize',
                     '20',
                     '-interline-spacing',
@@ -2961,6 +3115,76 @@ router.get('/google_search', async(req, res, reject) => {
 	})
 })
 
+router.get('/dogpile_image', async(req, res, next) => {
+    var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+    try {
+        var options = {
+            url: `http://results.dogpile.com/serp?qc=images&q=${q}`,
+            method: "GET",
+            headers: {
+                "Accept": "text/html",
+                "User-Agent": "Chrome"
+            }
+        }
+        request(options, function(error, response, responseBody) {
+            if (error) return
+
+            $ = cheerio.load(responseBody)
+            var links = $(".image a.link")
+            var cari = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"))
+            if (!cari.length) return
+            var hasil = cari[Math.floor(Math.random() * cari.length)]
+        res.json({
+              status: true,
+              code: 200,
+              creator: `${creator}`,
+              result: hasil
+            })
+        })
+    } catch (e) {
+                         res.sendFile(__path + '/docs/503.html')}
+  }
+})
+
+router.get('/search_dogpile', async(req, res, next) => {
+    var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+    try {
+        var options = {
+            url: `https://results.dogpile.com/serp?qc=web&q=${q}`,
+            method: "GET",
+            headers: {
+                "Accept": "text/html",
+                "User-Agent": "Chrome"
+            }
+        }
+        request(options, function(error, response, responseBody) {
+            if (error) return
+
+            $ = cheerio.load(responseBody)
+            var links = $(".web-bing__result span.web-bing__url")
+            var title = $(".web-bing__result a.target")
+            var decs = $(".web-bing__result span.web-bing__description")
+        res.json({
+              link: links,
+              title: title,
+              decs: decs
+            })
+        })
+    } catch (e) {
+                         res.sendFile(__path + '/docs/503.html')}
+  }
+})
+
 router.get('/sfilesearch', async(req, res, reject) => {
 	var q = req.query.q;
 	var apikey = req.query.apikey
@@ -3322,6 +3546,74 @@ router.get('/kecocokan_nama_pasangan', async(req, res, reject) => {
 		.catch(e => {
 			res.sendFile(__path + '/docs/503.html')
 	})
+})
+
+///Random Image
+
+router.get('/onepiece', async (req, res, next) => {
+	var apikey = req.query.apikey
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       axios.get('https://api.wibusoft.com/api/subreddit/OnePiece', {
+	responseType: 'json',
+	headers: {
+		'accept': 'application/json'
+	}
+}).then((res) => {
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	rest: res.data.result
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
+router.get('/cats', async (req, res, next) => {
+	var apikey = req.query.apikey
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       axios.get('https://api.wibusoft.com/api/subreddit/cats', {
+	responseType: 'json',
+	headers: {
+		'accept': 'application/json'
+	}
+}).then((res) => {
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	rest: res.data.result
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
+router.get('/cats', async (req, res, next) => {
+	var apikey = req.query.apikey
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       axios.get('https://api.wibusoft.com/api/subreddit/cats', {
+	responseType: 'json',
+	headers: {
+		'accept': 'application/json'
+	}
+}).then((res) => {
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+             	rest: res.data.result
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
 })
         
         
