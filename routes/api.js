@@ -1211,8 +1211,6 @@ router.get('/facebook_downloader', async (req, res, next) => {
         .then(response => response.json())
         .then(data => {
              res.json({
-             	message: `Ok`,
-             	status: `Success`,
              	result
              })
          })
@@ -1232,8 +1230,6 @@ router.get('/facebook_downloader2', async (req, res, next) => {
         .then(response => response.json())
         .then(data => {
              res.json({
-             	message: `Ok`,
-             	status: `Success`,
              	result
              })
          })
@@ -1624,10 +1620,12 @@ router.get('/tebak_lagu', async (req, res, next) => {
 		'accept': 'application/json'
 	}
 }).then((res) => {
+	const buffer = res.data;
+	console.log(buffer);
              res.json({
              	message: `Ok`,
              	status: `Success`,
-             	rest: res.data.result
+             	rest: buffer
              })
          })
          .catch(e => {
@@ -2304,10 +2302,12 @@ router.get('/attp', async (req, res, next) => {
 		'accept': 'application/json'
 	}
 }).then((res) => {
+	const buffer = res.data;
+	console.log(buffer);
              res.json({
              	message: `Ok`,
              	status: `Success`,
-             	rest: res.data
+             	rest: buffer
              })
          })
          .catch(e => {
@@ -2328,10 +2328,12 @@ router.get('/ttp', async (req, res, next) => {
 		'accept': 'application/json'
 	}
 }).then((res) => {
+	const buffer = res.data;
+	console.log(buffer);
              res.json({
              	message: `Ok`,
              	status: `Success`,
-             	rest: res.data
+             	rest: buffer
              })
          })
          .catch(e => {
@@ -3448,10 +3450,12 @@ router.get('/onepiece', async (req, res, next) => {
 		'accept': 'application/json'
 	}
 }).then((res) => {
+	const json = res.data;
+	console.log(json);
              res.json({
              	message: `Ok`,
              	status: `Success`,
-             	rest: res.data.result
+             	rest: json
              })
          })
          .catch(e => {
@@ -3470,32 +3474,12 @@ router.get('/cats', async (req, res, next) => {
 		'accept': 'application/json'
 	}
 }).then((res) => {
+	const json = res.data;
+	console.log(json);
              res.json({
              	message: `Ok`,
              	status: `Success`,
-             	rest: res.data.result
-             })
-         })
-         .catch(e => {
-         	res.sendFile(__path + '/docs/503.html')
-})
-})
-
-router.get('/cats', async (req, res, next) => {
-	var apikey = req.query.apikey
-	
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-       axios.get('https://api.wibusoft.com/api/subreddit/cats', {
-	responseType: 'json',
-	headers: {
-		'accept': 'application/json'
-	}
-}).then((res) => {
-             res.json({
-             	message: `Ok`,
-             	status: `Success`,
-             	rest: res.data.result
+             	rest: json
              })
          })
          .catch(e => {
