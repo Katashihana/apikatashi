@@ -3104,8 +3104,6 @@ router.get('/dogpile_image', async(req, res, next) => {
               result: hasil
             })
         })
-    } catch (e) {
-                         res.sendFile(__path + '/docs/503.html')}
   }
 })
 
@@ -3138,8 +3136,6 @@ router.get('/search_dogpile', async(req, res, next) => {
               decs: decs
             })
         })
-    } catch (e) {
-                         res.sendFile(__path + '/docs/503.html')}
   }
 })
 
