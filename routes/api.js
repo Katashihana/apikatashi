@@ -2299,7 +2299,7 @@ router.get('/attp', async (req, res, next) => {
 	if (!q) return res.sendFile(__path + '/docs/406.html')
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-       axios.get('https://api.wibusoft.com/api/textmaker/attp?text=${q}, {
+       axios.get('https://api.wibusoft.com/api/textmaker/attp?text=${q}', {
 	responseType: 'arraybuffer',
 	headers: {
 		'accept': 'application/json'
@@ -2323,7 +2323,7 @@ router.get('/ttp', async (req, res, next) => {
 	if (!q) return res.sendFile(__path + '/docs/406.html')
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-       axios.get('https://api.wibusoft.com/api/textmaker/ttp?text=${q}, {
+       axios.get('https://api.wibusoft.com/api/textmaker/ttp?text=${q}', {
 	responseType: 'arraybuffer',
 	headers: {
 		'accept': 'application/json'
