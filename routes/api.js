@@ -2292,48 +2292,6 @@ router.get('/anime_search_news', async(req, res, reject) => {
 
 ///Other & News Fitur
 
-router.get('/jadwal_bioskop', async(req, res, next) => {
-var apikey = req.query.apikey
-
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-const { default: Axios } = require('axios')
-const cheerio = require('cheerio')
-
-Axios.get('https://jadwalnonton.com/now-playing')
-.then(({ data }) => {
-     const $ = cheerio.load(data)
-     let title = []
-     let url = []
-     let img = []
- 	$('div.row > div.item > div.clearfix > div.rowl > div.col-xs-6 > a').get().map((rest) => {
-         url.push($(rest).attr('href'))
-         })
-         $('div.row > div.item > div.clearfix > div.rowl > div.col-xs-6 > a > img').get().map((rest) => {
-        	title.push($(rest).attr('alt'))
-         })
-         $('div.row > div.item > div.clearfix > div.rowl > div.col-xs-6 > a > img').get().map((rest) => {
-        	img.push($(rest).attr('src'))
-         })
-     let result = []
-     for (let i = 0; i < url.length; i++) {
-          result.push({
-               	url: url[i],
-               	title: title[i],
-               	img: img[i]
-          })
-     }
-     res.json({
-     creator:  `${creator}`,
-     status: true,
-     result: result
-     })
-})
-.catch(e => {
-         	res.sendFile(__path + '/docs/503.html')
-})
-} 
-
 router.get('/attp', async (req, res, next) => {
 	var q = req.query.q;
 	var apikey = req.query.apikey
