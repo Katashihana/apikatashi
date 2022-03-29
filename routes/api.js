@@ -115,7 +115,7 @@ var { Shoope,
          GSMArena,
          photoManipulation,
          FilmApik23,
-         infoFilm123} = require('../lib/index10.js');
+         infoFilm123} = require('../lib/index3.js');
 var { asahotak, family100, siapakah, siapakah2, susunkata, tekateki } = require('../lib/game.js');
 
 const santet = [
