@@ -3652,7 +3652,6 @@ router.get('/bokep', async (req, res, next) => {
              	status: `Success`,
              	res: terima1
              })
-         })
          .catch(e => {
          	res.sendFile(__path + '/docs/503.html')
 })
