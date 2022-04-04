@@ -30,13 +30,16 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "feedid": "^2.0.1",
+    "fs": "^0.0.1-security",
     "file-type": "^16.5.3",
     "form-data": "^4.0.0",
+    "g-i-s": "^2.1.6",
     "got": "^11.8.3",
     "google-it": "^1.6.2",
     "google-img-scrap": "^1.0.6",
     "jsdom": "^17.0.0",
     "lodash": "^4.17.20",
+    "nodemailer": "^6.6.3",
     "mal-scraper": "^2.11.4",
     "moment": "^2.29.1",
     "mongodb": "^3.6.3",
@@ -55,7 +58,8 @@
     "urlencode": "^1.1.0",
     "url": "^0.11.0",
     "usetube": "^2.1.4",
-    "yt-search": "^2.8.0",
+    "yt-search": "^2.10.2",
+    "ytdl-core": "^4.9.0"
     "ytpl": "^2.0.5"
   }
 }
