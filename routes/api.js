@@ -4162,8 +4162,7 @@ router.get('/nekopoi', async (req, res, next) => {
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
        const terima1 = nekopoi[Math.floor(Math.random() * (nekopoi.length))]
-       fetch(encodeURI(`https://api-katashi.herokuapp.com/docs/zippyshare?url=${terima1}&apikey=katashi`))
-       .then(response => response.json())
+       zippy(terima1)
        .then(data => {
        const buffer = await getBuffer(data.result.url)
        await fs.writeFileSync(__path +`/tmp/neko.mp4`, buffer)
