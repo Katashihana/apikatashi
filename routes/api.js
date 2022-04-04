@@ -4168,6 +4168,7 @@ router.get('/nekopoi', async (req, res, next) => {
        const buffer = await getBuffer(data.result.url)
        await fs.writeFileSync(__path +`/tmp/neko.mp4`, buffer)
        await res.sendFile(__path +`/tmp/neko.mp4`)
+       })
 })
 
 router.get('/aesthetic', async (req, res, next) => {
