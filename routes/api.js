@@ -2953,7 +2953,7 @@ router.get('/kompasnews', async(req, res, reject) => {
 	})
 })
 
-router.get('/cnn', async(req, res, reject) => {
+router.get('/inews', async(req, res, reject) => {
 	var apikey = req.query.apikey
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
