@@ -4162,11 +4162,10 @@ router.get('/nekopoi', async (req, res, next) => {
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
        const terima1 = nekopoi[Math.floor(Math.random() * (nekopoi.length))]
-       zippy(terima1)
-       .then(data => {
-       const buffer = await getBuffer(data.result.url)
-       await fs.writeFileSync(__path +`/tmp/neko.mp4`, buffer)
-       await res.sendFile(__path +`/tmp/neko.mp4`)
+       res.json({
+             	owner: `katashi`,
+             	status: `Success`,
+             	res: terima1
        })
 })
 
