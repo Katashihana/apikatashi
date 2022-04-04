@@ -36,6 +36,7 @@ var TikTokScraper = require('tiktok-scraper');
 const malScraper = require('mal-scraper') 
 const usetube = require('usetube');
 const feedid = require('feedid');
+const fs = require('fs')
 
 var { color, bgcolor } = require(__path + '/lib/color.js');
 var { fetchJson } = require(__path + '/lib/fetcher.js')
@@ -71,18 +72,18 @@ var { dafontSearch, dafontDown} = require('../lib/dafont.js');
 var neonime = require('../lib/neonime.js')
 var { Search,
          getInfo,
-         Getdownload} = require('../lib/otakudesu.js');
+         Getdownload } = require('../lib/otakudesu.js');
 var { quotes,
-         twitter,} = require('../lib/scrape.js');
+         twitter } = require('../lib/scrape.js');
 var { joox,
-         jooxdl} = require('../lib/joox.js');
+         jooxdl } = require('../lib/joox.js');
 var { wiki,
          cnn,
          artinama,
          kodepos,
          wallpapper,
          ghstalk,
-         ramalanJodoh} = require('../lib/scrape21.js');
+         ramalanJodoh } = require('../lib/scrape21.js');
 var { hentaivid,
          asupanfilm,
          asupanfilminfo,
@@ -103,20 +104,33 @@ var { hentaivid,
          zerochan,
          trendtwit,
          randomtt,
-         devianart} = require('../lib/scrapper.js');
+         devianart } = require('../lib/scrapper.js');
 var savefrom = require("../lib/savefrom.js")
 var toonme = require("../lib/toonme.js")
 var { rexdl,
          rexdldown,
          job,
          textmakervid,
-         wikisearch} = require('../lib/index10.js');
+         wikisearch } = require('../lib/index10.js');
 var { Shoope,
          GSMArena,
          photoManipulation,
          FilmApik23,
          infoFilm123} = require('../lib/index3.js');
 var { asahotak, family100, siapakah, siapakah2, susunkata, tekateki } = require('../lib/game.js');
+var { quotesAnime, 
+         aiovideodl, 
+         umma, 
+         ringtone, 
+         styletext } = require('../lib/a1.js');
+var { asmaul,
+         igtv,
+         UserAgent,
+         hoax,
+         emoji } = require('../lib/a2.js');
+var { fandom,
+         topAnime,
+         topManga } = require('../lib/anime.js');
 
 const santet = [
 'Nama : DilaPye Colmek\nFoto : -\nVideo : 1\nSize : 90 MB\nDurasi : 5 Menit\nKualitas : HD\nRate : ⭐⭐⭐⭐\n\nDownload Link\nDownload : https://drive.google.com/file/d/1We9TeG1whjz2bmNCrahctK1-Hiy3BtWN/view \n PASSWORD FILE : AA18+#29',
@@ -145,6 +159,17 @@ const santet = [
 'Nama : Kiki hijab\nFoto : -\nVideo : 14\nSize : 190 MB\nDurasi : - Menit\nKualitas : HD\nRate : ⭐⭐⭐⭐\n\nDownload Link\nDownload : https://drive.google.com/file/d/1lZDvGBclp35JxhWRpVSCrVOO5YhIQSSn/view\nPassword file : AA18+#45',
 'Nama : Tifanny\nFoto : 117\nVideo : 4\nSize : 30 MB\nDurasi : - Menit\nKualitas : HD\nRate : ⭐⭐⭐⭐\n\nDownload Link\nDownload : https://drive.google.com/file/d/1lrO9YJ1-MJtHavMpN2kG3nmJSReJtzE6/view\nPassword file : AA18+#46',
 'Nama : Vierannii\nFoto : 95\nVideo : -\nSize : 12 MB\nDurasi : - Menit\nKualitas : HD\nRate : ⭐⭐⭐⭐\n\nDownload Link\nDownload : https://drive.google.com/file/d/1lrOIZFT1n5XWqkX5uVq7xmmSpKjX70Mf/view\nPassword file : AA18+#47',
+        ]
+const nekopoi = [
+'https://www2.zippyshare.com/d/z9dcY6Nr/791216/%5bNekoPoi%5d_Akina_to_Onsen_de_H_Shiyo%5b360P%5d%5bnekopoi.care%5d.mp4',
+'https://www4.zippyshare.com/d/j7PFLGUY/946757/%5bNekoPoi%5d_Tsuma_ga_Kirei_ni_Natta_Wake_-_02_%5b360P%5d_%5bnekopoi.care%5d.mp4',
+'https://www111.zippyshare.com/d/EK5uqIMh/566060/%5bNekoPoi%5d_Megane_no_Megami_-_01_%5b360P%5d_%5bnekopoi.care%5d.mp4',
+'https://www109.zippyshare.com/d/2ebALhhS/463654/%5bNekoPoi%5d_Watashi_ga_Toriko_-_02%5b360P%5d%5bnekopoi.care%5d.mp4',
+'https://www115.zippyshare.com/d/LmzOkRAI/313299/%5bNekoPoi%5d_Chichi-iro_Toiki_-_01_%5b360P%5d%5bnekopoi.care%5d.mp4',
+'https://www89.zippyshare.com/d/SgEHvrJs/42812/%5bNekoPoi%5d_Chichi-iro_Toiki_-_02_%5b360P%5d%5bnekopoi.care%5d.mp4',
+'https://www66.zippyshare.com/d/j0ivbciL/520411/%5bNekoPoi%5d_Onna_Maou_Melissa_no_H_na_Boukenki_-_01_%5b360P%5d_%5bnekopoi.care%5d.mp4',
+'NIH LINKNYA: https://www71.zippyshare.com/d/M225YIrR/535656/%5bNekoPoi%5d_Buta_no_Gotoki_Sanzoku_ni_Torawarete_Shojo_wo_Ubawareru_Kyonyuu_Himekishi_Onna_Senshi_-_01%5b360P%5d%5bnekopoi.care%5d.mp4',
+'https://www49.zippyshare.com/d/bdwYjaXS/605790/%5bNekoPoi%5d_Akebi_no_Hana___Maho_-_01_%5b360P%5d_%5bnekopoi.pro%5d.mp4',
         ]
 
 function randomNomor(min, max = null) {
@@ -1195,6 +1220,46 @@ router.get('/surah', async(req, res, reject) => {
 	})
 })
 
+router.get('/umma_downloader', async(req, res, reject) => {
+	var url = req.query.url;
+	var apikey = req.query.apikey
+	
+	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	umma(url)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+             	status: `Success`,
+             	result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/asmaul', async(req, res, reject) => {
+	var apikey = req.query.apikey
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	asmaul()
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+             	status: `Success`,
+             	result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
 ///Downloader Fitur
 
 router.get('/play_mp3', async (req, res, next) => {
@@ -1319,6 +1384,27 @@ router.get('/all_sosmed_downloader', async (req, res, next) => {
 })
 })
 
+router.get('/all_sosmed_downloader2', async (req, res, next) => {
+	var url = req.query.url;
+	var apikey = req.query.apikey
+	
+	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       aiovideodl(url)
+        .then(data => {
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+                 creator: `Katashi Hana`,
+             	result: data
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
 router.get('/joox', async(req, res, reject) => {
 	var q = req.query.q;
 	var apikey = req.query.apikey
@@ -1407,6 +1493,25 @@ router.get('/igdownloader', async(req, res, reject) => {
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
 	aexm.igdl(url)
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/igtvdownloader', async(req, res, reject) => {
+	var url = req.query.url;
+	var apikey = req.query.apikey
+	
+	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	igtv(url)
 	.then(data => {
 		var result = data;
 		res.json({
@@ -1658,7 +1763,7 @@ router.get('/tebaklagu', async (req, res, next) => {
        fetch(encodeURI(`https://raw.githubusercontent.com/Katashihana/apikatashi/master/random/tembak.json`))
         .then(response => response.json())
         .then(data => {
-        var lontong = data.data;
+        var lontong = data;
         var result = lontong[Math.floor(Math.random() * lontong.length)];
              res.json({
              	message: `Ok`,
@@ -2325,6 +2430,79 @@ router.get('/anime_search_news', async(req, res, reject) => {
 	})
 })
 
+//---->ANIME NEW FITUR<------
+router.get('/quotes_anime', async (req, res, next) => {
+	var apikey = req.query.apikey
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       quotesAnime()
+        .then(data => {
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+                 creator: `Katashi Hana`,
+             	result: data
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
+router.get('/fandom', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	fandom(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/topanime', async(req, res, reject) => {
+	var apikey = req.query.apikey
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	topAnime()
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/topManga', async(req, res, reject) => {
+	var apikey = req.query.apikey
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	topManga()
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
 ///Other & News Fitur
 
 router.get('/image_to_anime', async(req, res, reject) => {
@@ -2395,6 +2573,23 @@ router.get('/lirik', async(req, res, reject) => {
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
 	aexm.lirik(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/hoax', async(req, res, reject) => {l
+	var apikey = req.query.apikey
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	hoax()
 	.then(data => {
 		var result = data;
 		res.json({
@@ -3652,9 +3847,17 @@ router.get('/bokep', async (req, res, next) => {
              	status: `Success`,
              	res: terima1
              })
-         .catch(e => {
-         	res.sendFile(__path + '/docs/503.html')
 })
+
+router.get('/nekopoi', async (req, res, next) => {
+	var apikey = req.query.apikey
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       const terima1 = nekopoi[Math.floor(Math.random() * (nekopoi.length))]
+       const buffer = await getBuffer(terima1)
+       await fs.writeFileSync(__path +`/tmp/neko.mp4`, buffer)
+       await res.sendFile(__path +`/tmp/neko.mp4`)
 })
 
 router.get('/animemes', async (req, res, next) => {
@@ -3665,7 +3868,7 @@ router.get('/animemes', async (req, res, next) => {
        fetch(encodeURI(`https://raw.githubusercontent.com/Katashihana/apikatashi/master/random/animemes.json`))
         .then(response => response.json())
         .then(data => {
-        var lontong = data.data;
+        var lontong = data;
         var result = lontong[Math.floor(Math.random() * lontong.length)];
              res.json({
              	message: `Ok`,
@@ -3686,7 +3889,7 @@ router.get('/hololive', async (req, res, next) => {
        fetch(encodeURI(`https://raw.githubusercontent.com/Katashihana/apikatashi/master/random/hololive.json`))
         .then(response => response.json())
         .then(data => {
-        var lontong = data.data;
+        var lontong = data;
         var result = lontong[Math.floor(Math.random() * lontong.length)];
              res.json({
              	message: `Ok`,
@@ -3707,7 +3910,7 @@ router.get('/minecraft', async (req, res, next) => {
        fetch(encodeURI(`https://raw.githubusercontent.com/Katashihana/apikatashi/master/random/minecraft.json`))
         .then(response => response.json())
         .then(data => {
-        var lontong = data.data;
+        var lontong = data;
         var result = lontong[Math.floor(Math.random() * lontong.length)];
              res.json({
              	message: `Ok`,
@@ -3728,12 +3931,54 @@ router.get('/onepiece', async (req, res, next) => {
        fetch(encodeURI(`https://raw.githubusercontent.com/Katashihana/apikatashi/master/random/onepiece.json`))
         .then(response => response.json())
         .then(data => {
-        var lontong = data.data;
+        var lontong = data;
         var result = lontong[Math.floor(Math.random() * lontong.length)];
              res.json({
              	message: `Ok`,
              	status: `Success`,
              	result
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
+router.get('/ringtone', async (req, res, next) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       ringtone()
+        .then(data => {
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+                 creator: `Katashi Hana`,
+             	result: data
+             })
+         })
+         .catch(e => {
+         	res.sendFile(__path + '/docs/503.html')
+})
+})
+
+router.get('/styletext', async (req, res, next) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       styletext()
+        .then(data => {
+             res.json({
+             	message: `Ok`,
+             	status: `Success`,
+                 creator: `Katashi Hana`,
+             	result: data
              })
          })
          .catch(e => {
