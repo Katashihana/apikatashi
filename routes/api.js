@@ -4169,38 +4169,6 @@ router.get('/nekopoi', async (req, res, next) => {
        })
 })
 
-router.get('/aesthetic', async (req, res, next) => {
-	var apikey = req.query.apikey
-	
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-       fetch(encodeURI(`https://raw.githubusercontent.com/Katashihana/RESTAPI-2/master/data/aesthetic.json`))
-        .then(response => response.json())
-        .then(data => {
-        var lontong = data;
-        var result = lontong[Math.floor(Math.random() * lontong.length)];
-       const buffer = await getBuffer(result)
-       await fs.writeFileSync(__path +`/tmp/aes.jpg`, buffer)
-       await res.sendFile(__path +`/tmp/aes.jpg`)
-         })
-})
-
-router.get('/asupan_tiktod', async (req, res, next) => {
-	var apikey = req.query.apikey
-	
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-       fetch(encodeURI(`https://raw.githubusercontent.com/Katashihana/RESTAPI-2/master/data/asupantiktok.json`))
-        .then(response => response.json())
-        .then(data => {
-        var lontong = data;
-        var result = lontong[Math.floor(Math.random() * lontong.length)];
-       const buffer = await getBuffer(result)
-       await fs.writeFileSync(__path +`/tmp/asupan.mp4`, buffer)
-       await res.sendFile(__path +`/tmp/asupan.mp4`)
-         })
-})
-
 router.get('/animemes', async (req, res, next) => {
 	var apikey = req.query.apikey
 	
