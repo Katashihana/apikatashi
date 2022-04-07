@@ -105,11 +105,8 @@ var { hentaivid,
          trendtwit,
          randomtt,
          devianart } = require('../lib/scrapper.js');
-var savefrom = require("../lib/savefrom.js")
 var toonme = require("../lib/toonme.js")
-var { rexdl,
-         rexdldown,
-         job,
+var { job,
          textmakervid,
          wikisearch } = require('../lib/index10.js');
 var { Shoope,
@@ -117,7 +114,6 @@ var { Shoope,
          photoManipulation,
          FilmApik23,
          infoFilm123} = require('../lib/index3.js');
-var { asahotak, family100, siapakah, siapakah2, susunkata, tekateki } = require('../lib/game.js');
 var { quotesAnime, 
          aiovideodl, 
          umma, 
@@ -144,7 +140,22 @@ var { jadwalbola,
   tafsirsurah,
   inews
     } = require('../lib/utils/index.js');
-
+var { getUrlTiny,
+         savefrom,
+         charaCheck,
+         chara,
+         brainlydetail,
+         brainly,
+         brainly2,
+         wattpad,
+         random_detail,
+         asahotak,
+         family100,
+         siapakah,
+         tekateki,
+         RandomCerpen,
+         herodetails,
+         herolist } = require('../lib/katashiapi.js');
 
 const santet = [
 'Nama : DilaPye Colmek\nFoto : -\nVideo : 1\nSize : 90 MB\nDurasi : 5 Menit\nKualitas : HD\nRate : ⭐⭐⭐⭐\n\nDownload Link\nDownload : https://drive.google.com/file/d/1We9TeG1whjz2bmNCrahctK1-Hiy3BtWN/view \n PASSWORD FILE : AA18+#29',
@@ -1152,9 +1163,11 @@ router.get('/listsurah', async(req, res, reject) => {
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
 	listsurah()
 	.then(data => {
-		var result = data;
 		res.json({
-			result
+			message: `Ok`,
+             	status: `Success`,
+                 creator: `Katashi Hana`,
+             	result: data
 		})
 		})
 		.catch(e => {
@@ -1171,9 +1184,11 @@ router.get('/surah', async(req, res, reject) => {
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
 	surah(q)
 	.then(data => {
-		var result = data;
 		res.json({
-			result
+			message: `Ok`,
+             	status: `Success`,
+                 creator: `Katashi Hana`,
+             	result: data
 		})
 		})
 		.catch(e => {
@@ -1190,9 +1205,11 @@ router.get('/tafsirsurah', async(req, res, reject) => {
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
 	tafsirsurah(q)
 	.then(data => {
-		var result = data;
 		res.json({
-			result
+			message: `Ok`,
+             	status: `Success`,
+                 creator: `Katashi Hana`,
+             	result: data
 		})
 		})
 		.catch(e => {
@@ -1497,13 +1514,13 @@ router.get('/youtube_mp4', async(req, res, reject) => {
 })
 
 router.get('/play_mp3-2', async(req, res, reject) => {
-	var url = req.query.url;
+	var q = req.query.q;
 	var apikey = req.query.apikey
 	
-	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!q) return res.sendFile(__path + '/docs/406.html')
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-	ytPlayMp3(url)
+	ytPlayMp3(q)
 	.then(data => {
 		var result = data;
 		res.json({
@@ -1516,13 +1533,13 @@ router.get('/play_mp3-2', async(req, res, reject) => {
 })
 
 router.get('/play_mp4-2', async(req, res, reject) => {
-	var url = req.query.url;
+	var q = req.query.q;
 	var apikey = req.query.apikey
 	
-	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!q) return res.sendFile(__path + '/docs/406.html')
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-	ytPlayMp4(url)
+	ytPlayMp4(q)
 	.then(data => {
 		res.json({
 			message: `Ok`,
@@ -1536,6 +1553,7 @@ router.get('/play_mp4-2', async(req, res, reject) => {
 	})
 })
 
+
 router.get('/telesticker', async(req, res, reject) => {
 	var url = req.query.url;
 	var apikey = req.query.apikey
@@ -1545,9 +1563,11 @@ router.get('/telesticker', async(req, res, reject) => {
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
 	telesticker(url)
 	.then(data => {
-		var result = data;
 		res.json({
-			result
+			message: `Ok`,
+             	status: `Success`,
+                 creator: `Katashi Hana`,
+             	result: data
 		})
 		})
 		.catch(e => {
@@ -1563,27 +1583,6 @@ router.get('/all_sosmed_downloader', async (req, res, next) => {
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
        savefrom(url)
-        .then(data => {
-             res.json({
-             	message: `Ok`,
-             	status: `Success`,
-                 creator: `Katashi Hana`,
-             	result: data
-             })
-         })
-         .catch(e => {
-         	res.sendFile(__path + '/docs/503.html')
-})
-})
-
-router.get('/all_sosmed_downloader2', async (req, res, next) => {
-	var url = req.query.url;
-	var apikey = req.query.apikey
-	
-	if (!url) return res.sendFile(__path + '/docs/406.html')
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-       aiovideodl(url)
         .then(data => {
              res.json({
              	message: `Ok`,
@@ -2793,17 +2792,18 @@ router.get('/hoax', async(req, res, reject) => {
 	})
 })
 
-
 router.get('/jadwalbola', async(req, res, reject) => {
 	var apikey = req.query.apikey
-	
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
 	jadwalbola()
 	.then(data => {
 		var result = data;
 		res.json({
-			result
+			message: `Ok`,
+             	status: `Success`,
+                 creator: `Katashi Hana`,
+             	res: result
 		})
 		})
 		.catch(e => {
@@ -2813,14 +2813,16 @@ router.get('/jadwalbola', async(req, res, reject) => {
 
 router.get('/jadwaltv', async(req, res, reject) => {
 	var apikey = req.query.apikey
-	
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
 	jadwaltv()
 	.then(data => {
 		var result = data;
 		res.json({
-			result
+			message: `Ok`,
+             	status: `Success`,
+                 creator: `Katashi Hana`,
+             	res: result
 		})
 		})
 		.catch(e => {
@@ -3361,7 +3363,7 @@ router.get('/styletext', async (req, res, next) => {
 	if (!q) return res.sendFile(__path + '/docs/406.html')
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-       styletext()
+       styletext(q)
         .then(data => {
              res.json({
              	message: `Ok`,
@@ -3408,11 +3410,10 @@ router.get('/brainly', async (req, res, next) => {
        fetch(encodeURI(`https://api.zeks.me/api/brainly?apikey=Iyungputra&q=$q}&count=5`))
         .then(response => response.json())
         .then(data => {
-        var lontong = data.data;
              res.json({
              	message: `Ok`,
              	status: `Success`,
-             	result
+             	result: data
              })
          })
          .catch(e => {
@@ -4162,11 +4163,10 @@ router.get('/nekopoi', async (req, res, next) => {
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
        const terima1 = nekopoi[Math.floor(Math.random() * (nekopoi.length))]
-       res.json({
-             	owner: `katashi`,
-             	status: `Success`,
-             	res: terima1
-       })
+       const download = await zippy(terima1)
+       const buffer = await getBuffer(download.result.url)
+       await fs.writeFileSync(__path +`/tmp/neko.mp4`, buffer)
+       await res.sendFile(__path +`/tmp/neko.mp4`)
 })
 
 router.get('/animemes', async (req, res, next) => {
@@ -4251,6 +4251,298 @@ router.get('/onepiece', async (req, res, next) => {
          .catch(e => {
          	res.sendFile(__path + '/docs/503.html')
 })
+})
+
+///New latest last
+router.get('/asahotak', async(req, res, reject) => {
+	var apikey = req.query.apikey;
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	asahotak()
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/getUrlTiny', async(req, res, reject) => {
+	var url = req.query.url;
+	var apikey = req.query.apikey
+	
+	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	getUrlTiny(url)
+	.then(data => {
+		res.json({
+			message: `Ok`,
+             	status: `Success`,
+                 creator: `Katashi Hana`,
+             	result: data
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/brainlydetail', async(req, res, reject) => {
+	var url = req.query.url;
+	var apikey = req.query.apikey
+	
+	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	brainlydetail(url)
+	.then(data => {
+		res.json({
+			message: `Ok`,
+             	status: `Success`,
+                 creator: `Katashi Hana`,
+             	result: data
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/charaCheck', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	charaCheck(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/chara', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	chara(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/brainly2', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	brainly(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/brainly3', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	brainly2(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/wattpad2', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	wattpad(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/wattpadrandom', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	random_detail(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/family100_2', async(req, res, reject) => {
+	var apikey = req.query.apikey;
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	family100()
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/siapakah', async(req, res, reject) => {
+	var apikey = req.query.apikey;
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	siapakah()
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/tekateki', async(req, res, reject) => {
+	var apikey = req.query.apikey;
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	tekateki()
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/RandomCerpen', async(req, res, reject) => {
+	var apikey = req.query.apikey;
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	RandomCerpen()
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/herolist', async(req, res, reject) => {
+	var apikey = req.query.apikey;
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	herolist()
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/herodetails', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	herodetails(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
 })
 
 
