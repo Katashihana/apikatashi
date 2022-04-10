@@ -156,7 +156,18 @@ var { getUrlTiny,
          tafsir,
          telesticker,
          jadwaltv,
-         photofunSearch } = require('../lib/katashiapi.js');
+         photofunSearch,
+         alphacoders,
+         wallpaperflare,
+         convertSticker,
+         creatememe,
+         wamods,
+         amino,
+         layarkaca,
+         gempaterkini,
+         cuacaterkini,
+         datamasjid,
+         bioskopcomingsoon } = require('../lib/katashiapi.js');
 var { fetchJson, getBase64, kyun, createExif } = require('../lib/fetch')
 
 const santet = [
@@ -198,6 +209,7 @@ const nekopoi = [
 'https://www71.zippyshare.com/v/M225YIrR/file.html',
 'https://www49.zippyshare.com/v/bdwYjaXS/file.html',
         ]
+
 
 function randomNomor(min, max = null) {
 if (max !== null) {
@@ -4273,7 +4285,7 @@ router.get('/getUrlTiny', async(req, res, reject) => {
 	})
 })
 
-router.get('/charaCheck', async(req, res, reject) => {
+router.get('/characheck', async(req, res, reject) => {
 	var q = req.query.q;
 	var apikey = req.query.apikey
 	
@@ -4350,23 +4362,6 @@ router.get('/wattpadrandom', async(req, res, reject) => {
 			message: `Ok`,
             status: `Success`,
             result
-		})
-		})
-		.catch(e => {
-			res.sendFile(__path + '/docs/503.html')
-	})
-})
-
-router.get('/family100_2', async(req, res, reject) => {
-	var apikey = req.query.apikey;
-	
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-	family100()
-	.then(data => {
-		var result = data;
-		res.json({
-			result
 		})
 		})
 		.catch(e => {
@@ -4656,7 +4651,188 @@ router.get('/photofunsearch', async(req, res, reject) => {
 			res.sendFile(__path + '/docs/503.html')
 	})
 })
-         
+
+router.get('/alphacoders', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	alphacoders(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            author: `Katashi Hana`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/wallpaperflare', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	wallpaperflare(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            author: `Katashi Hana`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/wamods', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	wamods(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            author: `Katashi Hana`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/amino', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	amino(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            author: `Katashi Hana`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/layarkaca', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	layarkaca(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            author: `Katashi Hana`,
+            result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/datamasjid', async(req, res, reject) => {
+	var apikey = req.query.apikey;
+	
+	page = randomNomor(5970)
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	datamasjid('semua provinsi', `${page}`)
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/gempaterkini', async(req, res, reject) => {
+	var apikey = req.query.apikey;
+	
+	page = randomNomor(5970)
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	gempaterkini()
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/cuacaterkini', async(req, res, reject) => {
+	var apikey = req.query.apikey;
+	
+	page = randomNomor(5970)
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	cuacaterkini()
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/bioskopcomingsoon', async(req, res, reject) => {
+	var apikey = req.query.apikey;
+	
+	page = randomNomor(5970)
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	bioskopcomingsoon()
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
          
          
 
