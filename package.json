@@ -36,6 +36,7 @@
     "form-data": "^4.0.0",
     "fluent-ffmpeg": "^2.1.2",
     "fs-extra": "^10.0.0",
+    "fb-video-downloader": "^1.0.3",
     "g-i-s": "^2.1.6",
     "got": "^11.8.3",
     "google-it": "^1.6.2",
