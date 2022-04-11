@@ -37,6 +37,7 @@ const malScraper = require('mal-scraper')
 const usetube = require('usetube');
 const feedid = require('feedid');
 const fs = require('fs')
+const facebook2 = require('fb-video-downloader')
 
 var { color, bgcolor } = require(__path + '/lib/color.js');
 var { fetchJson } = require(__path + '/lib/fetcher.js')
@@ -4783,7 +4784,6 @@ router.get('/datamasjid', async(req, res, reject) => {
 router.get('/gempaterkini', async(req, res, reject) => {
 	var apikey = req.query.apikey;
 	
-	page = randomNomor(5970)
 	if (!apikey) return res.sendFile(__path + '/docs/403.html')
 	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
 	gempaterkini()
@@ -4827,6 +4827,69 @@ router.get('/bioskopcomingsoon', async(req, res, reject) => {
 		var result = data;
 		res.json({
 			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/facebook_test', async (req, res, next) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       const info = await fetchJson(`https://loader.to/ajax/download.php?format=mp3&url=${q}`)
+       var down = info.id
+       const download = await fetchJson(`https://loader.to/ajax/progress.php?id=${down}`)
+       res.json({
+			message: `Ok`,
+            status: `Success`,
+            author: `Katashi Hana`,
+            result: info,
+            download: download
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/short_url', async (req, res, next) => {
+	var url = req.query.url;
+	var apikey = req.query.apikey
+	
+	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+       const info = await fetchJson(`https://tinyurl.com/api-create.php?url=${url}`)
+       res.json({
+			message: `Ok`,
+            status: `Success`,
+            author: `Katashi Hana`,
+            result: info,
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/fbtest', async(req, res, reject) => {
+	var url = req.query.url;
+	var apikey = req.query.apikey
+	
+	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	facebook2.getInfo(url)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            author: `Katashi Hana`,
+            result
 		})
 		})
 		.catch(e => {
