@@ -38,6 +38,8 @@ const usetube = require('usetube');
 const feedid = require('feedid');
 const fs = require('fs')
 const facebook2 = require('fb-video-downloader')
+const text2img = require('text2image')
+const caliph = require('caliph-api')
 
 var { color, bgcolor } = require(__path + '/lib/color.js');
 var { fetchJson } = require(__path + '/lib/fetcher.js')
@@ -4890,6 +4892,218 @@ router.get('/fbtest', async(req, res, reject) => {
             status: `Success`,
             author: `Katashi Hana`,
             result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/text2image', async (req, res, next) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	   const testText = 'HARTA\nTAHTA\n{q}';
+	   const font = await text2img.loadFont('../lib/arial.tff')
+       const buffer = await text2img.convert(font, testText, 0, 0, 512)
+       await fs.writeFileSync(__path +`/tmp/text.png`, buffer)
+       await res.sendFile(__path +`/tmp/text.png`)
+})
+
+router.get('/zippyshare2', async(req, res, reject) => {
+	var url = req.query.url;
+	var apikey = req.query.apikey
+	
+	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	caliph.downloader.zippyshare(url)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            author: `Katashi Hana`,
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/singkatan', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	caliph.search.singkatankata(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            author: `Katashi Hana`,
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/Persamaan', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	caliph.search.persamaankata(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            author: `Katashi Hana`,
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/freefireid', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	caliph.search.freefireid(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            author: `Katashi Hana`,
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/fakeua', async(req, res, reject) => {
+	var apikey = req.query.apikey;
+	
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	caliph.random.fakeua()
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/emoji_mix', async(req, res, reject) => {
+	var emo1 = req.query.emo1;
+	var emo2 = req.query.emo2;
+	var apikey = req.query.apikey
+	
+	if (!emo1) return res.sendFile(__path + '/docs/406.html')
+	if (!emo2) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	caliph.other.emojimix(emo1, emo2)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            author: `Katashi Hana`,
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/whois', async(req, res, reject) => {
+	var q = req.query.q;
+	var apikey = req.query.apikey
+	
+	if (!q) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	caliph.tools.whois(q)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            author: `Katashi Hana`,
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+router.get('/urlshort', async(req, res, reject) => {
+	var url = req.query.url;
+	var custom = req.query.custom;
+	var apikey = req.query.apikey
+	
+	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!custom) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	caliph.tools.shortlink(url, custom)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            author: `Katashi Hana`,
+			result
+		})
+		})
+		.catch(e => {
+			res.sendFile(__path + '/docs/503.html')
+	})
+})
+
+
+router.get('/urlshort', async(req, res, reject) => {
+	var url = req.query.url;
+	var apikey = req.query.apikey
+	
+	if (!url) return res.sendFile(__path + '/docs/406.html')
+	if (!apikey) return res.sendFile(__path + '/docs/403.html')
+	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
+	caliph.tools.expandurl(url)
+	.then(data => {
+		var result = data;
+		res.json({
+			message: `Ok`,
+            status: `Success`,
+            author: `Katashi Hana`,
+			result
 		})
 		})
 		.catch(e => {

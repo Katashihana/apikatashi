@@ -8,6 +8,10 @@ router.get('/', (req, res) => {
 })
 
 router.get('/api', (req, res) => {
+    res.sendFile(__path + '/docs/index.html')
+})
+
+router.get('/api2', (req, res) => {
     res.sendFile(__path + '/docs/home.html')
 })
 
