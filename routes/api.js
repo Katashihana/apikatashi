@@ -53,7 +53,6 @@ var {
 const { getBuffer } = require('../lib/function')
 var { options } = require('../lib/options.js');
 var { zippy } = require('../lib/zippy.js');
-var { mediafireDl } = require('../lib/mediafire.js');
 var { doujindesu } = require('../lib/doujindesu.js');
 var { sfiledl } = require('../lib/solidfiles.js');
 var { jadwalSolat } = require('../lib/solat.js');
@@ -65,10 +64,6 @@ var { palingmurah,
          jalantikus } = require('../lib/testapi.js');
 var { randomTiktok,
          tiktokHastag } = require('../lib/tiktok_search.js');
-var {
-    getLatest,
-    getVideo
-} = require('../lib/nekopoi.js');
 var { Search, animeDetail, downloadEps } = require('../lib/mynime.js');
 var { dafontSearch, dafontDown} = require('../lib/dafont.js');
 var neonime = require('../lib/neonime.js')
@@ -2951,22 +2946,6 @@ router.get('/kompasnews', async(req, res, reject) => {
 	})
 })
 
-router.get('/inews', async(req, res, reject) => {
-	var apikey = req.query.apikey
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-	inews()
-	.then(data => {
-		var result = data;
-		res.json({
-			result
-		})
-		})
-		.catch(e => {
-			res.sendFile(__path + '/docs/503.html')
-	})
-})
-
 router.get('/nulis', async (req, res, next) => {
 	var text = req.query.text;
 	var apikey = req.query.apikey
@@ -3666,45 +3645,6 @@ router.get('/yt_stalk', async(req, res, reject) => {
 			res.sendFile(__path + '/docs/503.html')
 	})
 })
-
-router.get('/emojimix', async (req, res, next) => {
-	var emoji1 = req.query.emoji1;
-	var emoji2 = req.query.emoji2;
-	var apikey = req.query.apikey
-	
-	if (!emoji1) return res.sendFile(__path + '/docs/406.html')
-	if (!emoji2) return res.sendFile(__path + '/docs/406.html')
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-       fetch(encodeURI(`https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${emoji1}_${emoji2}`))
-        .then(response => response.json())
-        .then(data => {
-        var emojimix = data;
-             res.json({
-             	message: `Ok`,
-             	status: `Success`,
-             	result: emojimix.results
-             })
-         })
-         .catch(e => {
-         	res.sendFile(__path + '/docs/503.html')
-})
-})
-
-router.get('/emojimix_download', async(req, res, reject) => {
-	var url = req.query.url;
-	var apikey = req.query.apikey
-	
-	if (!url) return res.sendFile(__path + '/docs/406.html')
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-	var result = (await axios.get(`${url}`)).data
-	data = await getBuffer(result)
-	await fs.writeFileSync(__path +'/tmp/mix.png', data)
-    await res.sendFile(__path +'/tmp/mix.png')
-    await sleep(3000)
-    await fs.unlinkSync(__path + '/tmp/mix.png')
-		})
 
 router.get('/pinterest_stalk', async (req, res, next) => {
              var username = req.query.username;
@@ -4440,27 +4380,6 @@ router.get('/herolist', async(req, res, reject) => {
 	})
 })
 
-router.get('/herodetails', async(req, res, reject) => {
-	var q = req.query.q;
-	var apikey = req.query.apikey
-	
-	if (!q) return res.sendFile(__path + '/docs/406.html')
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-	herodetails(q)
-	.then(data => {
-		var result = data;
-		res.json({
-			message: `Ok`,
-            status: `Success`,
-            result
-		})
-		})
-		.catch(e => {
-			res.sendFile(__path + '/docs/503.html')
-	})
-})
-
 router.get('/rexdl', async(req, res, reject) => {
 	var q = req.query.q;
 	var apikey = req.query.apikey
@@ -4911,28 +4830,6 @@ router.get('/text2image', async (req, res, next) => {
        const buffer = await text2img.convert(font, testText, 0, 0, 512)
        await fs.writeFileSync(__path +`/tmp/text.png`, buffer)
        await res.sendFile(__path +`/tmp/text.png`)
-})
-
-router.get('/zippyshare2', async(req, res, reject) => {
-	var url = req.query.url;
-	var apikey = req.query.apikey
-	
-	if (!url) return res.sendFile(__path + '/docs/406.html')
-	if (!apikey) return res.sendFile(__path + '/docs/403.html')
-	if (apikey != `${keyapi}`) return res.sendFile(__path + '/docs/403.html')
-	caliph.downloader.zippyshare(url)
-	.then(data => {
-		var result = data;
-		res.json({
-			message: `Ok`,
-            status: `Success`,
-            author: `Katashi Hana`,
-			result
-		})
-		})
-		.catch(e => {
-			res.sendFile(__path + '/docs/503.html')
-	})
 })
 
 router.get('/singkatan', async(req, res, reject) => {
