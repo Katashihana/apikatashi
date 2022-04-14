@@ -7,11 +7,15 @@ router.get('/', (req, res) => {
     res.sendFile(__path + '/docs/first.html')
 })
 
-router.get('/api', (req, res) => {
+router.get('/mining', (req, res) => {
     res.sendFile(__path + '/docs/index.html')
 })
 
-router.get('/api2', (req, res) => {
+router.get('/last_update', (req, res) => {
+    res.sendFile(__path + '/docs/last.html')
+})
+
+router.get('/api', (req, res) => {
     res.sendFile(__path + '/docs/home.html')
 })
 
