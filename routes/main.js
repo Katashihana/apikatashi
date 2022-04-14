@@ -7,11 +7,11 @@ router.get('/', (req, res) => {
     res.sendFile(__path + '/docs/first.html')
 })
 
-router.get('/mining', (req, res) => {
-    res.sendFile(__path + '/docs/index.html')
+router.get('/docs/mining', (req, res) => {
+    res.sendFile(__path + '/docs/mining.html')
 })
 
-router.get('/last_update', (req, res) => {
+router.get('/docs/last_update', (req, res) => {
     res.sendFile(__path + '/docs/last.html')
 })
 
